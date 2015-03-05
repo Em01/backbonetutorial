@@ -17,6 +17,14 @@
   <script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js"></script>
   <script>
 
+  	$.ajaxPrefilter( function( options, originalOptions, jqXHR ) {
+  	options.url = 'http://backbonejs-beginner.herokuapp.com' + options.url;
+	});
+
+  	var Users = Backbone.Collection.extend({
+  		url: '/users'
+  	});
+
   	var UserList = Backbone.View.extend({
   		el: '.page',
   		render: function () {
@@ -29,9 +37,12 @@
 			'': 'home'
 		}
 	});
+
+	var userList = new UserList();
+
 	var router = new Router();
 	router.on('route:home', function () {
-		console.log('We have loaded the home page');
+		userList.render();
 	});
 
 	Backbone.history.start();
